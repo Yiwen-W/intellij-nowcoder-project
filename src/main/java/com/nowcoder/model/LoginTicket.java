@@ -1,6 +1,6 @@
 package com.nowcoder.model;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 /**
  * Created by Wang Yiwen on 2017/5/6.
@@ -8,7 +8,7 @@ import javax.xml.crypto.Data;
 public class LoginTicket {
     private int id;
     private int userId;
-    private Data expired;
+    private Date expired;
     private int status;
     private String ticket;
     public int getId() {
@@ -27,11 +27,11 @@ public class LoginTicket {
         this.userId = userId;
     }
 
-    public Data getExpired() {
+    public Date getExpired() {
         return expired;
     }
 
-    public void setExpired(Data expired) {
+    public void setExpired(Date expired) {
         this.expired = expired;
     }
 
@@ -50,6 +50,7 @@ public class LoginTicket {
     public void setTicket(String ticket) {
         this.ticket = ticket;
     }
+
 
 
 }

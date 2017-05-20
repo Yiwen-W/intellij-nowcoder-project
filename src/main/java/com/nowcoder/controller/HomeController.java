@@ -1,5 +1,6 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.model.HostHolder;
 import com.nowcoder.model.Question;
 import com.nowcoder.model.ViewObject;
 import com.nowcoder.service.QuestionService;
@@ -29,6 +30,7 @@ public class HomeController {
     @Autowired
     UserService userService;
 
+
     private List<ViewObject> getQuestions(int userId, int offset, int limit) {
         List<Question> questionList = questionService.getLatestQuestions(userId, offset, limit);
         List<ViewObject> vos = new ArrayList<>();
@@ -45,6 +47,7 @@ public class HomeController {
     public String index(Model model,
                         @RequestParam(value = "pop", defaultValue = "0") int pop) {
         model.addAttribute("vos", getQuestions(0, 0, 10));
+
         return "index";
     }
 

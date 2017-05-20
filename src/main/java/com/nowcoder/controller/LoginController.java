@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.http.HTTPBinding;
 import java.util.Map;
 
 /**
@@ -25,14 +28,20 @@ public class LoginController {
     @RequestMapping(path = {"/reg/"},method={RequestMethod.POST})
     public String reg(Model model,
                       @RequestParam("username") String username,
-                      @RequestParam("password") String password){
+                      @RequestParam("password") String password,
+                      HttpServletResponse response){
         try{
         Map<String,String> map= userService.register(username,password);
-        if(map.containsKey("msg")){
-            model.addAttribute("msg",map.get("msg"));
-            return "login";
-        }
-        return "redirect:/";
+            if(map.containsKey("ticket")){
+                Cookie cookie =new Cookie("ticket",map.get("ticket"));
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                return "redirect:/";
+
+            }else{
+                model.addAttribute("msg",map.get("msg"));
+                return "login";
+            }
         }catch (Exception e){
             logger.error("注册异常"+e.getMessage());
             return "login";
@@ -44,14 +53,20 @@ public class LoginController {
     public String login(Model model,
                       @RequestParam("username") String username,
                       @RequestParam("password") String password,
-                        @RequestParam(value="remeberme", defaultValue="false") boolean remeberme) {
+                        @RequestParam(value="remeberme", defaultValue="false") boolean remeberme,
+                      HttpServletResponse response) {
         try{
             Map<String,String> map= userService.login(username,password);
-            if(map.containsKey("msg")){
+            if(map.containsKey("ticket")){
+                Cookie cookie =new Cookie("ticket",map.get("ticket"));
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                return "redirect:/";
+
+            }else{
                 model.addAttribute("msg",map.get("msg"));
                 return "login";
             }
-            return "redirect:/";
         }catch (Exception e){
             logger.error("注册异常"+e.getMessage());
             return "login";
