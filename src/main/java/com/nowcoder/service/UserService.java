@@ -93,7 +93,6 @@ public class UserService {
         loginTicketDAO.addTicket(loginTicket);
        return loginTicket.getTicket();
 
-
    }
 
     public User getUser(int id) {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HostHolder {
     private static ThreadLocal<User> users=new ThreadLocal<User>();
-    //为每一个线程都分配了一个变量
+    //为每一个线程都分配了一个变量，但是可以通过公共的接口访问
     public User getUser(){
         return users.get();
         //根据当前线程，找到当前线程的user

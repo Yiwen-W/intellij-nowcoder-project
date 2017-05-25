@@ -11,6 +11,7 @@ public class LoginTicket {
     private Date expired;
     private int status;
     private String ticket;
+
     public int getId() {
         return id;
     }

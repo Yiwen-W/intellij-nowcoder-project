@@ -35,6 +35,7 @@ public class PassportInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         //所有处理http请求的最前面
+        //请求之前
         String ticket=null;
         if(httpServletRequest.getCookies()!=null){
             for(Cookie cookie:httpServletRequest.getCookies()){
@@ -44,9 +45,10 @@ public class PassportInterceptor implements HandlerInterceptor{
                 }
             }
         }
+        //把cookie取出来放到上下文
         if(ticket!=null){
             LoginTicket loginTicket=loginTicketDAO.selectByTicket(ticket);
-            if(loginTicket!=null||loginTicket.getExpired().before(new Date())||
+            if(loginTicket == null||loginTicket.getExpired().before(new Date())||
                     loginTicket.getStatus()!=0){
                 return true;
             }
